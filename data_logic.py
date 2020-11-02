@@ -39,6 +39,8 @@ def first_team(formation, team_data):
     for spot in form_list:
         limited_data = team_data.loc[team_data['player_positions'].apply(
             lambda x: spot in x)]
+        print(limited_data[['Name', spot]], spot)
+        print(team_data[['Name', 'player_positions']])
         # limited_data = pd.DataFrame()
         if len(limited_data) == 0:
             positions = get_similar_positions(spot)
@@ -47,7 +49,13 @@ def first_team(formation, team_data):
                     team_data.loc[team_data['player_positions'].apply(lambda x: pos in x)])
         if len(limited_data) == 0:
             limited_data = team_data
-        player = limited_data[spot].idxmax()
+        limited_data['true_overall'] = np.where(limited_data['Age'] < YOUNG_PLAYER_MARGIN,
+                                                (limited_data['Potential'] +
+                                                 limited_data['Overall'])/2,
+                                                limited_data['Overall'],)
+        limited_data['top_position'] = (
+            limited_data['true_overall']*3+limited_data[spot]*2)
+        player = limited_data['top_position'].idxmax()
         player_pd = limited_data.loc[[player]]
         player_pd['NewPosition'] = spot
         first_eleven = first_eleven.append(player_pd)
@@ -77,10 +85,10 @@ def filtering_user_constraints(dat, cons_json):
     print(cons_json)
     if int(cons_json['min_price']) != -1:
         limited_data = limited_data[(
-            limited_data['Price'] >= int(cons_json['min_price']))]
+            limited_data['Value'] >= int(cons_json['min_price']))]
     if int(cons_json['max_price']) != -1:
         limited_data = limited_data[(
-            limited_data['Price'] <= int(cons_json['max_price']))]
+            limited_data['Value'] <= int(cons_json['max_price']))]
 
     if int(cons_json['min_age']) != -1:
         limited_data = limited_data[(

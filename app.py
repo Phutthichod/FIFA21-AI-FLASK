@@ -58,7 +58,7 @@ def firstTeam(club, form):
         start_eleven[['ID', 'Weight', 'Height', 'Wage', 'Value', 'Potential', 'Name', 'NewPosition', 'Age', 'Nationality', 'Overall']].reset_index().to_json(orient='records')), indent=2), 'worst_player': json.dumps(json.loads(
             worst_player[['ID', 'Weight', 'Height', 'Wage', 'Value', 'Potential', 'Name', 'NewPosition', 'Age', 'Nationality', 'Overall']].reset_index().to_json(orient='records')), indent=2),
         'pearson': json.dumps(json.loads(
-            sorted_similar_per.head(5)[['ID', 'Weight', 'Height', 'Wage', 'Value', 'Potential', 'Best Position', 'Name', 'Age', 'Nationality', 'Overall']].reset_index().to_json(orient='records')), indent=2)})
+            sorted_similar_per.head(5)[['ID', 'Weight', 'Height', 'Wage', 'Value', 'Potential', 'Best Position', 'Name', 'Age', 'Nationality', 'Overall', 'pearson']].reset_index().to_json(orient='records')), indent=2)})
 
 
 @ app.route('/findPlayer/<playerId>')

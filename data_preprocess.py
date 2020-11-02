@@ -27,7 +27,7 @@ def transform_attribute(x):
 def checkZero(x):
     if type(x) == type(0):
         return []
-    return x.split()
+    return x.split(", ")
 
 
 def checkType(x):
@@ -38,9 +38,9 @@ def checkType(x):
 
 def read_data2():
     dat21 = pd.read_csv("data/FIFA21_official_data.csv", delimiter=',')
-    # dat21.fillna(value=0, axis=0, inplace=True)
+    dat21.fillna(value=0, axis=0, inplace=True)
     dat20 = pd.read_csv("data/fifa20Player.csv", delimiter=',')
-    # dat20.fillna(value=0, axis=0, inplace=True)
+    dat20.fillna(value=0, axis=0, inplace=True)
     dat20 = dat20[['sofifa_id', 'player_positions', 'ls', 'st', 'rs', 'lw', 'lf', 'cf', 'rf', 'rw', 'lam', 'cam',
                    'ram', 'lm', 'lcm', 'cm', 'rcm', 'rm', 'lwb', 'ldm', 'cdm', 'rdm', 'rwb', 'lb', 'lcb', 'cb', 'rcb', 'rb']]
     # print(dat20)
@@ -103,7 +103,7 @@ def read_data():
 
 def formations():
     formation_dict = {
-        '433': ['GK', 'LB', 'CB', 'CB', 'RB', 'CDM', 'CDM', 'CM', 'LM', 'RM', 'ST'],
+        '433': ['GK', 'LB', 'CB', 'CB', 'RB', 'CM', 'CM', 'CAM', 'LW', 'RW', 'ST'],
         '442': ['GK', 'LB', 'CB', 'CB', 'RB', 'CM', 'RM', 'LM', 'CM', 'ST', 'ST'],
         '352': ['GK', 'CB', 'CB', 'CB', 'CDM', 'CM', 'RWB', 'LWB', 'CM', 'CF', 'ST']
     }
